@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   damage: 10
-  RotateSpeed: 20
+  RotateSpeed: 1000
   scale: 1
 --- !u!1 &360903676
 GameObject:
