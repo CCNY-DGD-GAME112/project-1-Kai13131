@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class SwordPivotRotate : MonoBehaviour
 {
     public float damage = 10f;
     public float RotateSpeed = 20f;
