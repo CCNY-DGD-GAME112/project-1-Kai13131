@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,24 +7,24 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI clockText;
     public TextMeshProUGUI scoreText;
 
-    public float timeRemining = 15f * 60f;
+    public float timeRemining = 5f * 60f;
     private bool isPaused = false;
 
     public AudioSource audioSoure;
     public AudioClip audioClip;
 
     public GameObject enemyPrefab;
+    public GameObject coinPrefab;
 
     public static GameManager Instance;
 
+    public float spawnDuration = 5f;
+    public int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            spawn();
-        }
+        
     }
 
     void Awake()
@@ -42,6 +43,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ClockDisplay();
+
+        Spawn();
+    }
+
+    public void updateScore()
+    {
+        score += 10;
+        scoreText.text = "Score: " + score.ToString();
+    }
+
+    void ClockDisplay()
+    {
         //Timer
         if (isPaused) return;
 
@@ -51,6 +65,7 @@ public class GameManager : MonoBehaviour
             audioSoure.PlayOneShot(audioClip);
             PauseGame();
         }
+
         timeRemining -= Time.deltaTime;
         int minutes = Mathf.FloorToInt(timeRemining / 60f);
         int seconds = Mathf.FloorToInt(timeRemining % 60f);
@@ -65,11 +80,20 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Paused");
     }
 
-    void spawn()
+    void Spawn()
     {
-        float xVal = Random.Range(-9, 9);
-        float yVal = Random.Range(-9, 9);
+        spawnDuration -= Time.deltaTime;
 
-        Instantiate(enemyPrefab, new Vector3(xVal, yVal, 0), Quaternion.identity);
+        if (spawnDuration <= 0f)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                float xVal = Random.Range(-9, 9);
+                float yVal = Random.Range(-9, 9);
+                Instantiate(enemyPrefab, new Vector3(xVal, yVal, 0), Quaternion.identity);
+            }
+            spawnDuration = 5f;
+        }
+        
     }
 }

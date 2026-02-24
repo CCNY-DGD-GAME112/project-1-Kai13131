@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
     public int enemyDamage = 100;
 
     public static EnemyManager Instance;
+    public GameObject scoreCoinPrefab;
     void Awake()
     {
         if (Instance)
@@ -48,7 +49,7 @@ public class EnemyManager : MonoBehaviour
     void enemyFollow()
     {
         Vector3 targetPosition = PlayerManager.Instance.gameObject.transform.position;
-        transform.position = Vector3.Lerp(
+        transform.position = Vector3.MoveTowards(
             transform.position,
             targetPosition,
             smoothSpeed * Time.deltaTime);
@@ -57,7 +58,7 @@ public class EnemyManager : MonoBehaviour
     void enemyDie()
     {
         Destroy(gameObject);
-        GameObject scoreCoin = CoinManager.Instance.gameObject;
-        Instantiate(scoreCoin, transform.position, Quaternion.identity);
+        
+        Instantiate(scoreCoinPrefab, transform.position, Quaternion.identity);
     }
 }

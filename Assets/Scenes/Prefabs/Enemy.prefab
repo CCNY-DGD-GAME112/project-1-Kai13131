@@ -106,7 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311a7aeddc7362e489e432f321247eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  enemyHealth: 100
   smoothSpeed: 1
+  enemyDamage: 100
+  scoreCoinPrefab: {fileID: 1574983731190214845, guid: 144902d7f76259e45b15fbec69d76c70, type: 3}
 --- !u!61 &-3783708367363242309
 BoxCollider2D:
   m_ObjectHideFlags: 0

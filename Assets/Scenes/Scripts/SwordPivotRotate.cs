@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SwordPivotRotate : MonoBehaviour
 {
-    public float damage = 10f;
+    
     public float RotateSpeed = 20f;
     public float scale = 1f;
 
