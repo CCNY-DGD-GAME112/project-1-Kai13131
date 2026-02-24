@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI clockText;
+    public TextMeshProUGUI scoreText;
 
     public float timeRemining = 15f * 60f;
     private bool isPaused = false;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
 
     public static GameManager Instance;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

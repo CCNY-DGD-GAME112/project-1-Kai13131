@@ -1,10 +1,24 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     public float enemyHealth = 100f;
     public float smoothSpeed = 1f;
+    public int enemyDamage = 100;
 
+    public static EnemyManager Instance;
+    void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +32,19 @@ public class EnemyManager : MonoBehaviour
         enemyFollow();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Sword"))
+        {
+            int playerDamage = PlayerManager.Instance.playerDamage;
+            enemyHealth -= playerDamage;
+            
+            if(enemyHealth < 0)
+            {
+                enemyDie();
+            }
+        }
+    }
     void enemyFollow()
     {
         Vector3 targetPosition = PlayerManager.Instance.gameObject.transform.position;
@@ -27,4 +54,10 @@ public class EnemyManager : MonoBehaviour
             smoothSpeed * Time.deltaTime);
     }
     
+    void enemyDie()
+    {
+        Destroy(gameObject);
+        GameObject scoreCoin = CoinManager.Instance.gameObject;
+        Instantiate(scoreCoin, transform.position, Quaternion.identity);
+    }
 }

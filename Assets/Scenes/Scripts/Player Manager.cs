@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     private float lastDamageTime = -999f;
     public static PlayerManager Instance;
 
+    public int playerDamage = 10;
     void Awake()
     {
         if (Instance)
@@ -39,7 +40,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(100);
+            int enemyDamage = EnemyManager.Instance.enemyDamage;
+            TakeDamage(enemyDamage);
         }
     }
 
