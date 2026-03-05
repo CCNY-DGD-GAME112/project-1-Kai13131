@@ -71,6 +71,7 @@ public class PlayerManager : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        GameManager.Instance.PauseGame();
     }
 
     void playerMovement()

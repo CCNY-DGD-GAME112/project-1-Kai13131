@@ -12,10 +12,12 @@ public class EnemyManager : MonoBehaviour
     public AudioSource audioSoure;
     public AudioClip audioClip;
 
+    public Sprite enemySprite;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        enemySprite = GetComponent<Sprite>();
 
     }
 

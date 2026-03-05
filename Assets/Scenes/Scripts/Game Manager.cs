@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    void PauseGame()
+    public void PauseGame()
     {
         isPaused = true;
         Time.timeScale = 0f;
