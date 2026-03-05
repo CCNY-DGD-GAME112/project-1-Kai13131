@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            int enemyDamage = EnemyManager.Instance.enemyDamage;
+            int enemyDamage = 100;
             TakeDamage(enemyDamage);
         }
     }

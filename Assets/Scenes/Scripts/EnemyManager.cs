@@ -7,19 +7,11 @@ public class EnemyManager : MonoBehaviour
     public float smoothSpeed = 1f;
     public int enemyDamage = 100;
 
-    public static EnemyManager Instance;
     public GameObject scoreCoinPrefab;
-    void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+
+    public AudioSource audioSoure;
+    public AudioClip audioClip;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +29,9 @@ public class EnemyManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Sword"))
         {
+            audioSoure.PlayOneShot(audioClip);
+            Debug.Log("Damaged");
+
             int playerDamage = PlayerManager.Instance.playerDamage;
             enemyHealth -= playerDamage;
             

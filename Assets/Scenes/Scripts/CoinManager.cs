@@ -2,18 +2,7 @@ using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
-    public static CoinManager Instance;
-    void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

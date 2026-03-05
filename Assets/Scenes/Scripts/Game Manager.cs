@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    public float spawnDuration = 5f;
+    public float spawnDuration = 1f;
+    public float spawnColddown = 1f;
     public int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -43,9 +44,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //audioSoure.PlayOneShot(audioClip);
+
         ClockDisplay();
 
-        Spawn();
+        spawnDuration -= Time.deltaTime;
+        if (spawnDuration <= 0f)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Spawn();
+            }
+            spawnDuration = spawnColddown;
+        }
     }
 
     public void updateScore()
@@ -56,13 +67,13 @@ public class GameManager : MonoBehaviour
 
     void ClockDisplay()
     {
+
         //Timer
         if (isPaused) return;
 
         if (timeRemining < 0f)
         {
             timeRemining = 0f;
-            audioSoure.PlayOneShot(audioClip);
             PauseGame();
         }
 
@@ -82,18 +93,19 @@ public class GameManager : MonoBehaviour
 
     void Spawn()
     {
-        spawnDuration -= Time.deltaTime;
-
-        if (spawnDuration <= 0f)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                float xVal = Random.Range(-9, 9);
-                float yVal = Random.Range(-9, 9);
-                Instantiate(enemyPrefab, new Vector3(xVal, yVal, 0), Quaternion.identity);
-            }
-            spawnDuration = 5f;
-        }
-        
+        float xVal = Random.Range(-9f, 9f);
+        float yVal = Random.Range(-9f, 9f);
+        Instantiate(enemyPrefab, new Vector3(xVal, yVal, 0), Quaternion.identity); 
     }
 }
+
+/*
+    1. Movement to avoid being damaged;
+    2. Collect the coins to get score;
+    3. Survive untill times up;
+
+    Layers of juice
+    1. The sound when sword attack the enemies
+    2. Add ainimation when enemies was damaged
+ 
+ */
