@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
     public float currentHealth = 1f;
     public float maxHealth = 1000f;
     public float speed = 5f;
-    public float damageCooldown = 1f;
+    public float damageCooldown = 0.5f;
     private float lastDamageTime = -999f;
     public static PlayerManager Instance;
 
@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            int enemyDamage = 100;
+            int enemyDamage = 200;
             TakeDamage(enemyDamage);
         }
     }
@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
-        GameManager.Instance.PauseGame();
+        GameManager.Instance.ReStartGame();
     }
 
     void playerMovement()

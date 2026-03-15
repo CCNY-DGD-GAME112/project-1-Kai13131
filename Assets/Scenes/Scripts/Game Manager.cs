@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public float timeRemining = 5f * 60f;
-    private bool isPaused = false;
 
     public AudioSource audioSoure;
     public AudioClip audioClip;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     void Awake()
@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ReStartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void updateScore()
     {
         score += 10;
@@ -67,16 +72,6 @@ public class GameManager : MonoBehaviour
 
     void ClockDisplay()
     {
-
-        //Timer
-        if (isPaused) return;
-
-        if (timeRemining < 0f)
-        {
-            timeRemining = 0f;
-            PauseGame();
-        }
-
         timeRemining -= Time.deltaTime;
         int minutes = Mathf.FloorToInt(timeRemining / 60f);
         int seconds = Mathf.FloorToInt(timeRemining % 60f);
@@ -84,18 +79,32 @@ public class GameManager : MonoBehaviour
         clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void PauseGame()
-    {
-        isPaused = true;
-        Time.timeScale = 0f;
-        Debug.Log("Game Paused");
-    }
-
     void Spawn()
     {
-        float xVal = Random.Range(-9f, 9f);
-        float yVal = Random.Range(-9f, 9f);
-        Instantiate(enemyPrefab, new Vector3(xVal, yVal, 0), Quaternion.identity); 
+        Vector2 spawnPosition = GetSpawnPosition();
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+    }
+
+    Vector2 GetSpawnPosition()
+    {
+        int Side = Random.Range(0, 4);
+        Vector2 spawnPosition = Vector2.zero;
+        if (Side == 0)
+        {
+            spawnPosition = Camera.main.ViewportToWorldPoint(new Vector2(Random.value, 1.1f));
+        }
+        else if (Side == 1)
+        {
+            spawnPosition = Camera.main.ViewportToWorldPoint(new Vector2(Random.value, -0.1f));
+        }else if(Side == 2)
+        {
+            spawnPosition = Camera.main.ViewportToWorldPoint(new Vector2(-0.1f,Random.value));
+        }else if(Side == 3)
+        {
+            spawnPosition = Camera.main.ViewportToWorldPoint(new Vector2(1.1f,Random.value));
+        }
+
+        return spawnPosition;
     }
 }
 
